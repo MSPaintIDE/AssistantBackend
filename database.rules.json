@@ -1,0 +1,15 @@
+{
+  "rules": {
+    ".write": "auth != null && auth.token.admin === true",
+    "users": {
+      ".read": "auth != null && auth.token.admin === true",
+      "$sub": {
+        ".read": "(auth != null && auth.token.sub === $sub) || auth.token.admin === true",
+        ".write": "auth != null && auth.token.admin === true",
+        "$action": {
+          ".validate": "($action === 'stop' || $action === 'highlight' || $action === 'compile' || $action === 'run') && newData.isNumber() && newData.val() % 1 === 0.0"
+        }
+      }
+    }
+  }
+}
