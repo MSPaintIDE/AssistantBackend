@@ -6,11 +6,20 @@ const {BasicCard, Button, Image, Suggestions, LinkOutSuggestion} = require('acti
 function registerMeta(app) {
     app.intent(['actions.intent.MAIN', 'Default Welcome Intent'], conv => {
         conv.user.storage.confirmText = null;
-        conv.ask(convert`Welcome to MS Paint IDE`);
+        conv.ask(convert`Welcome to MS Paint IDE, if you need help, just ask!`);
     });
 
     app.intent('Default Fallback Intent', (conv) => {
         unknownIntent(conv);
+    });
+
+    app.intent('thanks', (conv) => {
+        conv.ask(random(
+            `No problem`,
+            `Any time`,
+            `I'm happy to help`,
+            `I'm glad to assist you`
+        ));
     });
 
     app.intent('exit', (conv) => {

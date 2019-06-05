@@ -13,7 +13,4 @@ signin.registerSignin(app);
 meta.registerMeta(app);
 actions.registerActions(app, this);
 
-exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
-exports.signin = signin;
-exports.meta = meta;
-exports.actions = actions;
+module.exports = {dialogflowFirebaseFulfillment: functions.https.onRequest(app), signin, meta, actions};

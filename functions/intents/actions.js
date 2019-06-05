@@ -1,4 +1,5 @@
 const signin = require('./signin');
+const {random, unknownIntent} = require('./meta');
 const notSignedIn = require('../constants').notSignedIn;
 const {SignIn} = require('actions-on-google');
 
@@ -15,7 +16,14 @@ function registerActions(app) {
 
         action.sort((a, b) => actionExecutionOrder[a] - actionExecutionOrder[b]);
 
-        conv.ask(`Sure, I'll run your program, ${conv.user.profile.payload.given_name}`);
+        let name = conv.user.profile.payload.given_name;
+        let nameAppend = !(+new Date()%2) >= 0.5 ? `, ${name}` : ``;
+        conv.ask(random(
+            `Sure thing${nameAppend}!`,
+            `You got it${nameAppend}!`,
+            `Will do${nameAppend}!`,
+            `I'm on it${nameAppend}!`
+        ));
 
         let userRef = db.ref(`/users/${conv.user.profile.payload.sub}`);
 
@@ -30,9 +38,6 @@ function registerActions(app) {
     });
 
     app.intent('get_confirmation', (conv, input, confirmation) => {
-        console.log(`conv.user.storage.confirmText = ${JSON.stringify(conv.user.storage.confirmText)}`);
-        console.log(`confirmation = ${JSON.stringify(confirmation)}`);
-        // console.log(`input = ${input.text}`);
         switch (conv.user.storage.confirmText) {
             case notSignedIn:
                 if (confirmation) {
@@ -43,7 +48,7 @@ function registerActions(app) {
                 }
                 break;
             default:
-                metaIntent.unknownIntent(conv);
+                unknownIntent(conv);
                 break;
         }
     });
