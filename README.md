@@ -6,4 +6,5 @@ The Assistant Backend is a project deployed to [Firebase](https://firebase.googl
 - Stop, Highlight, Compile, and Run your code from your voice with ~500ms delay
 - Say bye to you
 
-The backend is not done, with more features planned. If you have any suggestions, just make a PR. The Assistant client and the agent.zip will be published shortly.
+All the database changes are listened to by the client, via the library [PaintAssistant](https://github.com/MSPaintIDE/PaintAssistant). The backend is not done, with more features planned. If you have any suggestions, just make a PR. The agent.zip is planned to be published shortly.
+
