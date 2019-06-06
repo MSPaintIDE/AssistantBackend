@@ -6,8 +6,14 @@
       "$sub": {
         ".read": "(auth != null && auth.token.sub === $sub) || auth.token.admin === true",
         ".write": "auth != null && auth.token.admin === true",
-        "$action": {
-          ".validate": "($action === 'stop' || $action === 'highlight' || $action === 'compile' || $action === 'run') && newData.isNumber() && newData.val() % 1 === 0.0"
+        ".validate": "newData.hasChildren(['actions', 'timestamp'])",
+        "actions": {
+          "$anything": {
+            ".validate": "(newData.val() === 'stop' || newData.val() === 'newData.val()' || newData.val() === 'compile' || newData.val() === 'run')"
+          }
+        },
+        "timestamp": {
+          ".validate": "newData.isNumber() && newData.val() % 1 === 0.0"
         }
       }
     }

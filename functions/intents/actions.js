@@ -27,14 +27,15 @@ function registerActions(app) {
 
         let userRef = db.ref(`/users/${conv.user.profile.payload.sub}`);
 
-        action.forEach(curr => {
-            userRef.child(curr).set({active: Date.now()}).then(() => {
-                console.log('Done!');
-            }).catch(err => {
-                console.log('Error!');
-                console.log(err);
-            })
-        })
+        userRef.set({
+            "actions": action,
+            "timestamp": Date.now()
+        }).then(() => {
+            console.log('Done!');
+        }).catch(err => {
+            console.log('Error!');
+            console.log(err);
+        });
     });
 
     app.intent('get_confirmation', (conv, input, confirmation) => {
