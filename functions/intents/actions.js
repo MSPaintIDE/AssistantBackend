@@ -21,19 +21,21 @@ function registerActions(app) {
         conv.ask(random(
             `Sure thing${nameAppend}!`,
             `You got it${nameAppend}!`,
-            `Will do${nameAppend}!`,
             `I'm on it${nameAppend}!`
         ));
 
         let userRef = db.ref(`/users/${conv.user.profile.payload.sub}`);
 
-        userRef.set({
+        userRef.child("actions").remove(() => userRef.set({
             "actions": action,
             "timestamp": Date.now()
         }).then(() => {
             console.log('Done!');
         }).catch(err => {
-            console.log('Error!');
+            console.log('Error during action setting!');
+            console.log(err);
+        })).catch(err => {
+            console.log('Error during initial remove!');
             console.log(err);
         });
     });

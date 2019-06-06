@@ -29,6 +29,17 @@ function registerMeta(app) {
         ));
     });
 
+    app.intent('default_no_input', (conv) => {
+        const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
+        if (repromptCount === 0) {
+            conv.ask(`What was that?`);
+        } else if (repromptCount === 1) {
+            conv.ask(`Sorry I didn't catch that. Could you repeat yourself?`);
+        } else if (conv.arguments.get('IS_FINAL_REPROMPT')) {
+            conv.close(`Alright, I'll talk to you later. See you soon!`);
+        }
+    });
+
     app.intent('help', (conv) => {
         let signedIn = signin.isSignedIn(conv);
 
@@ -60,9 +71,9 @@ function registerMeta(app) {
             subtitle: 'Using The IDE & Assistant',
             title: 'Assistant Help',
             buttons: new Button({
-                    title: 'Website',
-                    url: 'https://ms-paint-i.de/',
-                }),
+                title: 'Website',
+                url: 'https://ms-paint-i.de/',
+            }),
             image: new Image({
                 url: 'https://ms-paint-i.de/images/actions-image.png',
                 alt: 'Image alternate text',
