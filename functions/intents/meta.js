@@ -43,31 +43,29 @@ function registerMeta(app) {
     app.intent('help', (conv) => {
         let signedIn = signin.isSignedIn(conv);
 
-        conv.ask(new Suggestions(signedIn ? ['Run my code'] : ['Sign me up']));
+        conv.ask(new Suggestions(signedIn ? ['Run my code'] : ['Log me in']));
         conv.ask(new LinkOutSuggestion({
             name: 'Discord',
             url: 'https://discord.gg/RXmPkPJ',
         }));
 
-        let signupPrecursor = signedIn ? `To link the assistant and your IDE, just say 'Sign me up' to connect your accounts.` : ``;
+        let signupPrecursor = signedIn ? `To start linking the assistant to your IDE, just say 'Sign me up' to connect your accounts.` : ``;
 
         if (!conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')) {
             if (!signedIn) {
                 conv.ask(`To get started with assistant integration, just ask to sign in.`);
             }
 
-            if (!signedIn) conv.ask(signupPrecursor);
-            conv.ask(convert`Once you sign into the IDE as well, you can ask to stop, compile, highlight, and run your code.`);
-            conv.ask(`For more info, check out our website, or join our official Discord server.`);
+            conv.ask(convert`Once you sign into the desktop IDE, you can ask to stop, compile, highlight, and run your code.`);
+            conv.ask(convert`For more info, check out our website by Googleing MS Paint IDE`);
             return;
         }
 
         conv.ask('Check out the card on your screen to see what I can do.');
         conv.ask(new BasicCard({
             text: `${signupPrecursor}
-                    Once you sign into the IDE as well, you can ask to stop, compile, highlight, and run your code.
-                    For more info, check out our website, or join our official Discord server. If you're interested
-                    in the development of the IDE, check out the GitHub organization linked in our website.`,
+                    Once you sign into the desktop IDE, you can ask to stop, compile, highlight, and run your code.
+                    For more info, check out our website by Googleing MS Paint IDE`,
             subtitle: 'Using The IDE & Assistant',
             title: 'Assistant Help',
             buttons: new Button({
@@ -76,7 +74,7 @@ function registerMeta(app) {
             }),
             image: new Image({
                 url: 'https://ms-paint-i.de/images/actions-image.png',
-                alt: 'Image alternate text',
+                alt: 'MS Paint IDE',
             }),
             display: 'CROPPED',
         }));
