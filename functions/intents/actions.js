@@ -19,9 +19,9 @@ function registerActions(app) {
         let name = conv.user.profile.payload.given_name;
         let nameAppend = !(+new Date()%2) >= 0.5 ? `, ${name}` : ``;
         conv.ask(random(
-            `Sure thing${nameAppend}!`,
-            `You got it${nameAppend}!`,
-            `I'm on it${nameAppend}!`
+            `Sure thing${nameAppend}! Can I do anything else for you?`,
+            `You got it${nameAppend}! Do you need anything else?`,
+            `I'm on it${nameAppend}! Would you like me to perform another action?`
         ));
 
         let userRef = db.ref(`/users/${conv.user.profile.payload.sub}`);

@@ -6,7 +6,7 @@ const {BasicCard, Button, Image, Suggestions, LinkOutSuggestion} = require('acti
 function registerMeta(app) {
     app.intent(['actions.intent.MAIN', 'Default Welcome Intent'], conv => {
         conv.user.storage.confirmText = null;
-        conv.ask(convert`Welcome to MS Paint IDE, if you need help, just ask!`);
+        conv.ask(convert`Welcome to MS Paint IDE, if you need help, just ask. <break time="1s"/>Can I do anything for you?`);
     });
 
     app.intent('Default Fallback Intent', (conv) => {
@@ -15,10 +15,8 @@ function registerMeta(app) {
 
     app.intent('thanks', (conv) => {
         conv.ask(random(
-            `No problem`,
-            `Any time`,
-            `I'm happy to help`,
-            `I'm glad to assist you`
+            `No problem, can I do anything else for you?`,
+            `Any time, do you need any more help?`
         ));
     });
 
